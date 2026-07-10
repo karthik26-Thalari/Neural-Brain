@@ -1,88 +1,80 @@
-# Neural Brain
+# 🧠 Neural Brain
 
-An interactive visualizer for neural networks — build one, break one, or import a real
-model from Hugging Face and watch it render as a living, glowing web.
+**Watch a neural network think.**
 
-## Features
+An interactive visualizer for neural networks — build one by hand, break one to see how it degrades, or import a real model straight from Hugging Face and watch it render as a living, glowing web of neurons and synapses.
 
-- **Landing page** — 3D pulsing brain hero (Three.js), glassmorphism UI
-- **Design mode** — pick a preset architecture (MLP, deep net, autoencoder, transformer
-  block) and it auto-wires instantly. Drag neurons to reshape the web by hand. Run a live
-  forward pass and watch particles flow synapse to synapse.
-- **Damage simulation** — sever a "billion-parameter" bundled connection, or randomly
-  prune 25% of the network, and watch it visibly degrade
-- **Live neuron cam** — click any neuron for a real-time close-up of it and its direct
-  synapses
-- **Import mode** — paste a Hugging Face model name or link (e.g. `gpt2`,
-  `bert-base-uncased`) and its real architecture (layer count, hidden size, attention
-  heads) renders in the same visual language. Includes an attention-view toggle and a
-  side-by-side compare mode for two models.
+🔗 **Live demo:** [neural-brain.pages.dev](https://neural-brain.pages.dev/)
+📦 **Repo:** [github.com/karthik26-Thalari/Neural-Brain](https://github.com/karthik26-Thalari/Neural-Brain)
 
-## Local development
+![status](https://img.shields.io/badge/status-live-2dd9c8) ![license](https://img.shields.io/badge/license-MIT-a78bff) ![stack](https://img.shields.io/badge/stack-React%20%2B%20TypeScript%20%2B%20Three.js-e8c15a)
+
+---
+
+## ✨ Features
+
+- 🌐 **3D landing page** — a pulsing, glowing brain built in Three.js, with live signal particles racing along its connections
+- 🎨 **Design mode** — pick a preset architecture (MLP, deep net, autoencoder, transformer block, and more) and it auto-wires instantly, or start from a **blank canvas** and build everything yourself
+- ➕ **Add & delete neurons** by hand, anywhere on the canvas
+- 🔗 **Connect neurons manually** — click two neurons, choose how many strings to draw between them, and watch them fan out as real, individually clickable synapses
+- ▶️ **Live forward pass** — glowing particles physically travel from neuron to neuron, and each layer only lights up once its signal actually arrives
+- 💥 **Damage simulation** — randomly sever 25% of the network and watch it visibly degrade
+- 📸 **Live neuron "cam"** — click any neuron for a real-time close-up view of it and its direct synapses
+- 🤗 **Hugging Face import** — paste a real model name (`gpt2`, `bert-base-uncased`, etc.) and its actual architecture (layer count, hidden size, attention heads) renders in the same visual language
+- 🖱️ **Floating, draggable, collapsible dock** — move it anywhere, or collapse it to a small glowing pill when you just want to look at the diagram
+- 🔍 Zoom, pan, and a bundle-unravel-on-click interaction for inspecting dense connections
+
+## 🛠️ Tech stack
+
+- **React + TypeScript + Vite**
+- **Canvas 2D** for the core rendering/physics/interaction engine
+- **Three.js** for the 3D landing hero
+- **Hugging Face Hub API** for real model architectures (no backend, no API key)
+- Deployed on **Cloudflare Pages**
+
+## 🚀 Running it locally
 
 ```bash
+git clone https://github.com/karthik26-Thalari/Neural-Brain.git
+cd Neural-Brain
 npm install
 npm run dev
 ```
 
 Opens at `http://localhost:5173`.
 
-## Build
+## 📦 Build & deploy
 
 ```bash
 npm run build
+npx wrangler pages deploy dist --project-name=neural-brain
 ```
 
-Outputs a static site to `dist/`.
-
-## Deploy to Cloudflare Pages
-
-**Option A — dashboard:**
-1. Push this project to a GitHub repo
-2. In Cloudflare Pages, "Create a project" -> connect the repo
-3. Build command: `npm run build`
-4. Build output directory: `dist`
-5. Deploy
-
-**Option B — Wrangler CLI:**
-```bash
-npm install -g wrangler
-npm run build
-wrangler pages deploy dist
-```
-
-## Notes on the Hugging Face import
-
-- Only public models on huggingface.co work (it fetches their public `config.json`
-  directly from the browser — no backend/API key needed).
-- Large layers are rendered as a capped, representative sample of nodes (not every real
-  neuron) so huge models stay readable — the UI notes when this is happening.
-- Parameter counts shown are a rough estimate for context, not an exact figure from the
-  model card.
-
-## Project structure
+## 📁 Project structure
 
 ```
 src/
   types.ts                shared type definitions
   engine/
     graph.ts               graph builder + preset architectures
-    NeuralEngine.ts         the canvas rendering/physics/interaction engine
-    huggingface.ts          HF config fetch + parsing into a renderable graph
+    NeuralEngine.ts         canvas rendering/physics/interaction engine
+    huggingface.ts          HF config fetch + parsing
   components/
-    BrainCanvas.tsx         React wrapper around the engine + info panel + live cam
+    BrainCanvas.tsx         React wrapper: engine + floating panels + dock UI
   pages/
-    Landing.tsx             3D hero landing page
-    Design.tsx              preset-based design mode
-    Import.tsx              Hugging Face import + compare mode
-  App.tsx                   mode switcher / nav
-  app.css                   glassmorphism theme
+    Landing.tsx              3D hero landing page
+    Design.tsx                design mode (presets, add/connect/delete, damage sim)
+    Import.tsx                 Hugging Face import mode
+  hooks/
+    useDraggable.ts            makes the dock draggable
+  App.tsx                     mode switcher
+  app.css                     glassmorphism theme
 ```
 
-## Ideas for what's next
+## 📄 License
 
-- Real edge-bundling math for Import mode when a layer's true connection count is huge
-  (right now the "hub" demo bundle is illustrative; a real model could compute and label
-  aggregate bundles per layer-pair automatically)
-- Training-over-time animation (weights drifting)
-- Save/share a designed network via a URL
+MIT — see [LICENSE](./LICENSE).
+
+---
+
+Built as a personal project to make neural networks something you can actually *watch* work, not just read about.
