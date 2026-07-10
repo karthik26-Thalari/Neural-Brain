@@ -125,3 +125,5 @@ MIT, see [LICENSE](./LICENSE).
 ---
 
 *Built as a personal project, for the simple reason that neural networks deserve to be watched, not just read about.*
+
+**by [karthik26-Thalari](https://github.com/karthik26-Thalari)**
